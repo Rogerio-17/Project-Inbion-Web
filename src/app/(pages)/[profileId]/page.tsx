@@ -1,8 +1,11 @@
+import { GetProfileData } from "@/app/server/get-profile-data"
 import ProjectCard from "@/components/commons/project-card"
 import { TotalVisits } from "@/components/commons/total-visits"
 import { UserCard } from "@/components/commons/user-card"
-import { Plus } from "lucide-react"
+import { auth } from "@/lib/auth"
 import Link from "next/link"
+import { notFound } from "next/navigation"
+import { NewProject } from "./components/new-project"
 
 interface ProfilePageProps {
     params: Promise<{
@@ -12,6 +15,15 @@ interface ProfilePageProps {
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
     const { profileId } = await params
+    const session = await auth()
+
+    const profileData = await GetProfileData(profileId)
+
+    if (!profileData) {
+        return notFound()
+    }
+
+    const isOwner = profileData.userId === session?.user?.id
 
     return (
         <div className="relative h-screen flex p-20 overflow-hidden">
@@ -30,15 +42,20 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                 <ProjectCard />
                 <ProjectCard />
                 <ProjectCard />
-                <button className="w-[340px] flex items-center justify-center gap-5 bg-background-secondary p-3 rounded-lg border border-transparent hoover:border-border-secondary">
-                    <Plus className="size-10 text-accent-green" />
-                    <span>Novo projeto</span>
-                </button>
+                {
+                    isOwner && (
+                        <NewProject profileId={profileId} />
+                    )
+                }
             </div>
 
-            <div className="absolute bottom-4 right-0 left-0 w-min mx-auto">
-                <TotalVisits />
-            </div>
+            {
+                isOwner && (
+                    <div className="absolute bottom-4 right-0 left-0 w-min mx-auto">
+                        <TotalVisits />
+                    </div>
+                )
+            }
         </div>
     )
 }
