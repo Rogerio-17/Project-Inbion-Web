@@ -1,22 +1,46 @@
-export default function ProjectCard() {
+"use client"
+
+import { ProjectData } from "@/app/server/get-profile-data"
+import Link from "next/link"
+
+interface ProjectCardProps {
+    project: ProjectData
+    isOwner: boolean
+    imgUrl?: string
+}
+
+export default function ProjectCard({ project, isOwner, imgUrl }: ProjectCardProps) {
+    const projectUrl = project.projectUrl
+    const formattedUrl = projectUrl.startsWith("http") ? projectUrl : `https://${projectUrl}`
+
+    function handleClick() {
+        console.log('clicou')
+    }
+
     return (
-        <div className="w-[340px] flex gap-5 bg-background-secondary p-3 rounded-lg border border-transparent hoover:border-border-secondary">
-            <div className="size-24 rounded-md overflow-hidden flex-shrink-0">
-                <img
-                    src="/project1.jpg"
-                    alt="Projeto"
-                    className="w-full h-full object-cover"
-                />
-            </div>
-            <div className="flex flex-col gap-2">
-                <span className="uppercase text-sx font-bold text-accent-green">
-                    10 Cliques
-                </span>
-                <div className="flex flex-col">
-                    <span className="text-white font-bold">Projeto 1</span>
-                    <span className="text-content-body text-sm">Descrição super detalahda sobre o prjeto.</span>
+        <Link href={formattedUrl} onClick={handleClick} target="_blank">
+            <div className="w-[340px] flex gap-5 bg-background-secondary p-3 rounded-lg border border-transparent hoover:border-border-secondary">
+                <div className="size-24 rounded-md overflow-hidden flex-shrink-0">
+                    <img
+                        src={imgUrl}
+                        alt="Projeto"
+                        className="w-full h-full object-cover"
+                    />
+                </div>
+                <div className="flex flex-col gap-2">
+                    {
+                        isOwner && (
+                            <span className="uppercase text-sx font-bold text-accent-green">
+                                {project.totalVisits || 0} Cliques
+                            </span>
+                        )
+                    }
+                    <div className="flex flex-col">
+                        <span className="text-white font-bold">{project.projectName}</span>
+                        <span className="text-content-body text-sm">{project.projectDescription}</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Link>
     )
 }
