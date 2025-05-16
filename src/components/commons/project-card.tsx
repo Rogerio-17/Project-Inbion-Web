@@ -6,11 +6,11 @@ import Link from "next/link"
 interface ProjectCardProps {
     project: ProjectData
     isOwner: boolean
-    imgUrl?: string
+    imgUrl: string
 }
 
 export default function ProjectCard({ project, isOwner, imgUrl }: ProjectCardProps) {
-    const projectUrl = project.projectUrl
+    const projectUrl = project ? project.projectUrl : ""
     const formattedUrl = projectUrl.startsWith("http") ? projectUrl : `https://${projectUrl}`
 
     function handleClick() {

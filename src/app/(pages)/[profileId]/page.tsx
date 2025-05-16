@@ -1,7 +1,7 @@
 import { GetProfileData, getProfileProjects } from "@/app/server/get-profile-data"
 import ProjectCard from "@/components/commons/project-card"
 import { TotalVisits } from "@/components/commons/total-visits"
-import { UserCard } from "@/components/commons/user-card"
+import { UserCard } from "@/components/commons/user-card/user-card"
 import { auth } from "@/lib/auth"
 import Link from "next/link"
 import { notFound } from "next/navigation"
@@ -50,7 +50,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                                 key={project.id}
                                 project={project}
                                 isOwner={isOwner}
-                                imgUrl={imgUrl}
+                                imgUrl={imgUrl ?? ""}
                             />
                         )
 
