@@ -37,7 +37,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                 </Link>
             </div>
             <div className="w-1/2 justify-center h-min">
-                <UserCard />
+                <UserCard profileData={profileData} />
             </div>
 
             <div className="w-full flex justify-center content-start gap-4 flex-wrap overflow-y-auto">

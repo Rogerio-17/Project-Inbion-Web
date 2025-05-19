@@ -1,10 +1,19 @@
 import { db } from "@/lib/firebase"
 import "server-only"
 
+export interface socialMedias {
+    github: string;
+    instagram: string;
+    linkedin: string;
+    twitter: string;
+}
+
 export type ProfileData = {
     userId: string;
     userEmail: string;
     totalVisits: number;
+    socialMedias?: socialMedias
+    updatedAt?: number
     createdAt: number;
 }
 

@@ -1,14 +1,14 @@
 import { Github, Instagram, Linkedin, Plus, Twitter } from "lucide-react";
 import { Button } from "../../ui/button";
 import { EditSocialLinks } from "./edit-social-links";
+import Link from "next/link";
+import { ProfileData } from "@/app/server/get-profile-data";
 
-export function UserCard() {
-    const icons = [
-        Github,
-        Instagram,
-        Linkedin,
-        Twitter,
-    ]
+interface UserCardProps {
+    profileData?: ProfileData
+}
+
+export function UserCard({ profileData }: UserCardProps) {
 
     return (
         <div className="w-[348px] flex flex-col gap-5 items-center p-5 border border-white border-opacity-10 bg-[#121212] rounded-3xl text-white">
@@ -37,16 +37,50 @@ export function UserCard() {
                 </span>
                 <div className="flex gap-3">
                     {
-                        icons.map((Icon, i) => (
-                            <button
-                                key={i}
+                        profileData?.socialMedias?.github && (
+                            <Link
+                                href={profileData?.socialMedias?.github}
+                                target="_blank"
                                 className="p-3 rounded-xl bg-[#1E1E1E] hover:bg-[#2E2E2E]"
                             >
-                                <Icon />
-                            </button>
-                        ))
+                                <Github />
+                            </Link>
+                        )
                     }
-                    <EditSocialLinks />
+                    {
+                        profileData?.socialMedias?.instagram && (
+                            <Link
+                                href={profileData?.socialMedias?.instagram}
+                                target="_blank"
+                                className="p-3 rounded-xl bg-[#1E1E1E] hover:bg-[#2E2E2E]"
+                            >
+                                <Instagram />
+                            </Link>
+                        )
+                    }
+                    {
+                        profileData?.socialMedias?.linkedin && (
+                            <Link
+                                href={profileData?.socialMedias?.linkedin}
+                                target="_blank"
+                                className="p-3 rounded-xl bg-[#1E1E1E] hover:bg-[#2E2E2E]"
+                            >
+                                <Linkedin />
+                            </Link>
+                        )
+                    }
+                    {
+                        profileData?.socialMedias?.twitter && (
+                            <Link
+                                href={profileData?.socialMedias?.twitter}
+                                target="_blank"
+                                className="p-3 rounded-xl bg-[#1E1E1E] hover:bg-[#2E2E2E]"
+                            >
+                                <Twitter />
+                            </Link>
+                        )
+                    }
+                    <EditSocialLinks socialMedias={profileData?.socialMedias} />
                 </div>
 
             </div>
