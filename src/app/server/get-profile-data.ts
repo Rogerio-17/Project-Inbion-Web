@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase"
 import "server-only"
+import { Link } from "../actions/add-custom-links";
 
 export interface socialMedias {
     github: string;
@@ -13,6 +14,9 @@ export type ProfileData = {
     userEmail: string;
     totalVisits: number;
     socialMedias?: socialMedias
+    link1?: Link,
+    link2?: Link,
+    link3?: Link,
     updatedAt?: number
     createdAt: number;
 }
