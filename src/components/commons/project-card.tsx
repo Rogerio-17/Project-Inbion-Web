@@ -1,8 +1,10 @@
 "use client"
 
+import { increaseProjectClick } from "@/app/actions/increase-profile-visits"
 import { ProjectData } from "@/app/server/get-profile-data"
 import { formatUrl } from "@/lib/utils"
 import Link from "next/link"
+import { useParams } from "next/navigation"
 
 interface ProjectCardProps {
     project: ProjectData
@@ -10,12 +12,15 @@ interface ProjectCardProps {
     imgUrl: string
 }
 
-export default function ProjectCard({ project, isOwner, imgUrl }: ProjectCardProps) {
+export default async function ProjectCard({ project, isOwner, imgUrl }: ProjectCardProps) {
+    const { profileId } = useParams()
     const projectUrl = project ? project.projectUrl : ""
     const formattedUrl = formatUrl(projectUrl)
 
-    function handleClick() {
-        console.log('clicou')
+    async function handleClick() {
+        if (!profileId || !project.id || isOwner) return
+
+        await increaseProjectClick(profileId as string, project.id)
     }
 
     return (
@@ -32,7 +37,7 @@ export default function ProjectCard({ project, isOwner, imgUrl }: ProjectCardPro
                     {
                         isOwner && (
                             <span className="uppercase text-sx font-bold text-accent-green">
-                                {project.totalVisits || 0} Cliques
+                                {project.totalClicks || 0} Cliques
                             </span>
                         )
                     }

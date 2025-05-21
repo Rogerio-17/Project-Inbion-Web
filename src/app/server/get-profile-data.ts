@@ -32,7 +32,7 @@ export type ProjectData = {
     projectUrl: string
     imagePath: string
     createdAt: number
-    totalVisits?: number
+    totalClicks?: number
 }
 
 export async function GetProfileData(profileId: string) {

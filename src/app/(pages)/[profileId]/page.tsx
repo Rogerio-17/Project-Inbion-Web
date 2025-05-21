@@ -7,6 +7,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { NewProject } from "./components/new-project"
 import { getDownloadURLFromPath } from "@/lib/firebase"
+import { increaseProfileVistis } from "@/app/actions/increase-profile-visits"
 
 interface ProfilePageProps {
     params: Promise<{
@@ -15,6 +16,7 @@ interface ProfilePageProps {
 }
 
 export default async function ProfilePage({ params }: ProfilePageProps) {
+    const environment = process.env.NEXT_PUBLIC_ENVIRONMENT;
     const { profileId } = await params
     const session = await auth()
 
@@ -27,6 +29,10 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     const projects = await getProfileProjects(profileId)
 
     const isOwner = profileData.userId === session?.user?.id
+
+    if (!isOwner && environment !== "development") {
+        await increaseProfileVistis(profileId)
+    }
 
     return (
         <div className="relative h-screen flex p-20 overflow-hidden">
@@ -66,7 +72,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
             {
                 isOwner && (
                     <div className="absolute bottom-4 right-0 left-0 w-min mx-auto">
-                        <TotalVisits />
+                        <TotalVisits totalVisits={profileData.totalVisits} />
                     </div>
                 )
             }
