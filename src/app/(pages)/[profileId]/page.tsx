@@ -7,7 +7,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import { NewProject } from "./components/new-project"
 import { getDownloadURLFromPath } from "@/lib/firebase"
-import { increaseProfileVistis } from "@/app/actions/increase-profile-visits"
+import { increaseProfileVisits } from "@/app/actions/increase-project-clicks"
 
 interface ProfilePageProps {
     params: Promise<{
@@ -31,7 +31,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     const isOwner = profileData.userId === session?.user?.id
 
     if (!isOwner && environment !== "development") {
-        await increaseProfileVistis(profileId)
+        await increaseProfileVisits(profileId)
     }
 
     return (

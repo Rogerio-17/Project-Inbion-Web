@@ -3,7 +3,7 @@
 import { db } from "@/lib/firebase"
 import { FieldValue } from "firebase-admin/firestore"
 
-export async function increaseProfileVistis(profileId: string) {
+export async function increaseProfileVisits(profileId: string) {
     const profileRef = db.collection("profiles").doc(profileId)
 
     await db.runTransaction(async (transaction) => {
