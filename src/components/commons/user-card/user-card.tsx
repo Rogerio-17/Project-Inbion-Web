@@ -5,18 +5,21 @@ import Link from "next/link";
 import { ProfileData } from "@/app/server/get-profile-data";
 import { AddCustomerLink } from "./add-customer-link";
 import { formatUrl } from "@/lib/utils";
+import { EditUserCard } from "./edit-user-card";
+import { getDownloadURLFromPath } from "@/lib/firebase";
 
 interface UserCardProps {
     profileData?: ProfileData
+    isOwner: boolean
 }
 
-export function UserCard({ profileData }: UserCardProps) {
+export async function UserCard({ profileData, isOwner }: UserCardProps) {
 
     return (
         <div className="w-[348px] flex flex-col gap-5 items-center p-5 border border-white border-opacity-10 bg-[#121212] rounded-3xl text-white">
             <div className="size-48">
                 <img
-                    src="/me.jpg"
+                    src={await getDownloadURLFromPath(profileData?.imagePath) || "/avatar_default.png"}
                     alt="Rogério Dev"
                     className="rounded-full object-cover w-full h-full"
                 />
@@ -24,12 +27,18 @@ export function UserCard({ profileData }: UserCardProps) {
             <div className=" flex flex-col gap-2 w-full">
                 <div className="flex items-center gap-2">
                     <h3 className="text-3xl font-bold min-w-0 overflow-hidden">
-                        Rogério Dev
+                        {profileData?.name || "Nome do usúario"}
                     </h3>
+
+                    {
+                        isOwner && (
+                            <EditUserCard profileData={profileData} />
+                        )
+                    }
                 </div>
 
                 <p className="opacity-40">
-                    "Eu faço produtos para internet"
+                    {profileData?.description || "Descrição"}
                 </p>
             </div>
 
@@ -82,7 +91,11 @@ export function UserCard({ profileData }: UserCardProps) {
                             </Link>
                         )
                     }
-                    <EditSocialLinks socialMedias={profileData?.socialMedias} />
+                    {
+                        isOwner && (
+                            <EditSocialLinks socialMedias={profileData?.socialMedias} />
+                        )
+                    }
                 </div>
 
             </div>
@@ -115,7 +128,12 @@ export function UserCard({ profileData }: UserCardProps) {
                             </Link>
                         )
                     }
-                    <AddCustomerLink />
+
+                    {
+                        isOwner && (
+                            <AddCustomerLink />
+                        )
+                    }
                 </div>
             </div>
         </div>

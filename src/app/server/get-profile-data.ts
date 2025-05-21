@@ -11,6 +11,9 @@ export interface socialMedias {
 
 export type ProfileData = {
     userId: string;
+    name?: string;
+    description?: string;
+    imagePath?: string;
     userEmail: string;
     totalVisits: number;
     socialMedias?: socialMedias
