@@ -27,16 +27,27 @@ export function Hero() {
 
             <div className="w-full flex items-center justify-center bg-[radial-gradient(circle_at_50%_50%,#4B2DBB,transparent_55%)]">
                 <div className="relative">
-                    <UserCard />
+                    <UserCard
+
+                        imageUrlDefault="/user_default.png"
+                    />
                     <div className="absolute -bottom-[7%] -right-[15%]">
-                        <TotalVisits />
+                        <TotalVisits totalVisitsFake={1125} />
                     </div>
                     <div className="absolute top-[20%] -left-[45%] -z-10">
-                        <ProjectCard />
+                        <ProjectCard
+                            name="Coda AI"
+                            description="Pojeto para desenvolvedores que buscam trabalhos!"
+                            imgUrl="/project1.jpg"
+                        />
                     </div>
 
                     <div className="absolute -top-[5%] -left-[55%] -z-10">
-                        <ProjectCard />
+                        <ProjectCard
+                            name="Projeto contruindo sonhos"
+                            description="Projeto focado em arrecadar fundos para contrução de moradias!"
+                            imgUrl="/project2.jpg"
+                        />
                     </div>
                 </div>
             </div>

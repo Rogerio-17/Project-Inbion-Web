@@ -43,7 +43,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
                 </Link>
             </div>
             <div className="w-1/2 justify-center h-min">
-                <UserCard profileData={profileData} isOwner={isOwner} />
+                <UserCard profileData={profileData} isOwner={isOwner} imageUrlDefault="/avatar_default.png" />
             </div>
 
             <div className="w-full flex justify-center content-start gap-4 flex-wrap overflow-y-auto">
@@ -71,7 +71,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
 
             {
                 isOwner && (
-                    <div className="absolute bottom-4 right-0 left-0 w-min mx-auto">
+                    <div className="absolute bottom-2 right-0 left-0 w-min mx-auto">
                         <TotalVisits totalVisits={profileData.totalVisits} />
                     </div>
                 )
