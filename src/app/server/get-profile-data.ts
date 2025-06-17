@@ -46,3 +46,11 @@ export async function getProfileProjects(profileId: string) {
 
     return snapshot.docs.map((docs) => docs.data()) as ProjectData[]
 }
+
+export async function getProfileId(userId: string) {
+    if (!userId) return null
+
+    const snapshot = await db.collection("profiles").where("userId", "==", userId).get()
+
+    return snapshot.docs.map((doc) => doc.id)[0]
+}

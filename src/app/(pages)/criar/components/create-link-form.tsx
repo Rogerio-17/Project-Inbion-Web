@@ -4,12 +4,14 @@ import { verifyLink } from "@/app/actions/verify-link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { sanitizeLink } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, FormEvent, useState } from "react";
 
 export function CreateLinkForm() {
     const router = useRouter()
-    const [link, setLink] = useState("")
+    const searchParams = useSearchParams()
+
+    const [link, setLink] = useState(searchParams.get("link") || "")
     const [error, setError] = useState("")
 
     function handleLinkChange(e: ChangeEvent<HTMLInputElement>) {
