@@ -5,6 +5,11 @@ import { Pricing } from "@/components/landing-page/princing";
 import { VideoExplanation } from "@/components/landing-page/video-explanation";
 import { trackServerEvent } from "@/lib/mixpanel";
 
+export const metadata = {
+  title: "ProjectInbion",
+  description: "Crie links personalizados e gratuitos para compartilhar suas redes sociais, portfólio e muito mais. Experimente agora!",
+}
+
 export default function Home() {
   trackServerEvent("page_view", {
     page: "home"

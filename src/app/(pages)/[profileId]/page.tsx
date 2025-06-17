@@ -9,6 +9,11 @@ import { NewProject } from "./components/new-project"
 import { getDownloadURLFromPath } from "@/lib/firebase"
 import { increaseProfileVisits } from "@/app/actions/increase-project-clicks"
 
+export const metadata = {
+    title: "ProjectInbion - Perfil",
+    description: "ProjectInbion - Perfil",
+}
+
 interface ProfilePageProps {
     params: Promise<{
         profileId: string

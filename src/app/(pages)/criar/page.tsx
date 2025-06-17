@@ -2,6 +2,15 @@ import { Header } from "@/components/landing-page/header";
 import { Rocket } from "lucide-react";
 import { CreateLinkForm } from "./components/create-link-form";
 import { trackServerEvent } from "@/lib/mixpanel";
+import { getSEOTags } from "@/lib/seo";
+
+export const metadata = getSEOTags({
+    appName: "ProjectInbion",
+    appDescription: "Crie links personalizados e gerencie seu perfil online.",
+    keywords: ["links personalizados", "perfil online", "ProjectInbion"],
+    appDomain: "https://project-inbion-web.vercel.app",
+    canonicalUrlRelative: "/",
+})
 
 export default function CriarPage() {
     trackServerEvent("page_view", {
