@@ -1,4 +1,5 @@
 import { db } from "@/lib/firebase"
+import { resend } from "@/lib/resend"
 import stripe from "@/lib/stripe"
 import Stripe from "stripe"
 
@@ -31,7 +32,15 @@ export async function POST(request: Request) {
 
                     if (hostedVoucherUrl) {
                         const userEmail = event.data.object.customer_email
-                        console.log("enviar o boleto para o cliente por email")
+
+                        if (userEmail) {
+                            resend.emails.send({
+                                from: 'onboarding@resend.dev',
+                                to: userEmail,
+                                subject: 'Boleto gerado com sucesso!',
+                                text: `Seu boleto foi gerado com sucesso! Você pode acessá-lo clicando no link abaixo:\n\n${hostedVoucherUrl}\n\nObrigado por escolher nosso serviço!`,
+                            });
+                        }
                     }
 
                 }
